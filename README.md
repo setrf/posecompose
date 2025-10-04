@@ -187,6 +187,17 @@ Caching & Performance
 - Static assets are long‑cached and content‑hashed, safe to cache for 7 days.
 - Client uses canvas compositing and exports JPEG (quality 0.9) to reduce payload size and maximize API compatibility.
 
+Analytics
+---------
+
+The application includes Google Analytics (G-E1EJSR0NEX) for tracking:
+- Page views and user sessions
+- User interactions and conversion events
+- Traffic sources and user behavior
+- Performance metrics
+
+The tracking code is loaded in `index.html` and automatically tracks page views. No additional configuration required.
+
 Operational Runbook
 -------------------
 
