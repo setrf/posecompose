@@ -1,6 +1,8 @@
 PoseCompose
 ===========
 
+> 🏆 **Winner – Google DeepMind Nano Banana Hackathon (Kaggle), selected from 832 submissions worldwide.**
+
 Create realistic group photos by compositing individual people into a background scene using Google Gemini. Upload one background photo and multiple subject photos, remove backgrounds for subjects, arrange them, and generate a final composite image.
 
 Live Production: https://posecompose.com (canonical) and https://www.posecompose.com (content host)
