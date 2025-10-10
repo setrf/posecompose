@@ -81,10 +81,10 @@ export const EmailCapture = ({ selectedCostume, onEmailSubmit, onSkip }: EmailCa
         
         <div className="space-y-2">
           <h2 className="text-2xl font-bold gradient-text">
-            Get Your {selectedCostume.name} Transformation
+            🎃 Your {selectedCostume.name} Magic Awaits!
           </h2>
           <p className="text-muted-foreground">
-            Join 10,000+ users transforming into their dream characters
+            Join 10,000+ magical transformations this Halloween season ✨
           </p>
         </div>
 
@@ -102,28 +102,28 @@ export const EmailCapture = ({ selectedCostume, onEmailSubmit, onSkip }: EmailCa
 
       {/* Benefits */}
       <Card className="p-6 space-y-4 bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
-        <h3 className="font-semibold text-purple-900">Why join our community?</h3>
+        <h3 className="font-semibold text-purple-900">🎁 Why Join Waifu Material?</h3>
         
         <div className="space-y-3 text-sm">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
               <Gift className="w-4 h-4 text-purple-600" />
             </div>
-            <span className="text-purple-800">Exclusive new costume drops weekly</span>
+            <span className="text-purple-800">🎃 Weekly Halloween costume drops & exclusives</span>
           </div>
           
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
               <Sparkles className="w-4 h-4 text-pink-600" />
             </div>
-            <span className="text-purple-800">Early access to seasonal collections</span>
+            <span className="text-purple-800">✨ Early access to seasonal transformations</span>
           </div>
           
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
               <Shield className="w-4 h-4 text-purple-600" />
             </div>
-            <span className="text-purple-800">Free transformation credits every month</span>
+            <span className="text-purple-800">💜 Free AI transformation credits every month</span>
           </div>
         </div>
       </Card>

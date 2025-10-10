@@ -108,17 +108,21 @@ export const CostumeSelection = ({ onCostumeSelect, onBack, selectedCostume }: C
     <div className="space-y-6">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold gradient-text">Choose Your Transformation</h2>
+        <h2 className="text-2xl font-bold gradient-text">Choose Your Halloween Magic 🎃</h2>
         <p className="text-muted-foreground">
-          Select a costume to begin your metamorphosis
+          Select from our AI-powered costume collection and watch the transformation unfold ✨
         </p>
+        <div className="flex items-center justify-center gap-2 text-sm text-purple-600">
+          <div className="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></div>
+          <span className="font-medium">Limited Edition Halloween Collection</span>
+        </div>
       </div>
 
       {/* Featured Costumes */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-          <h3 className="text-lg font-semibold">Featured Transformations</h3>
+          <h3 className="text-lg font-semibold">✨ Fan Favorites This Halloween</h3>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -130,7 +134,7 @@ export const CostumeSelection = ({ onCostumeSelect, onBack, selectedCostume }: C
 
       {/* All Costumes */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">All Halloween Costumes</h3>
+        <h3 className="text-lg font-semibold">🎭 Complete Halloween Collection</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {allCostumes.map(costume => (

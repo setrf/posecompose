@@ -240,19 +240,90 @@ export const GenerationLounge = ({ selectedCostume, userEmail, onComplete }: Gen
         </div>
       </Card>
 
-      {/* Affiliate Promotion */}
-      <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-4 text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Gift className="w-5 h-5 text-purple-600" />
-          <h4 className="font-semibold text-purple-900">Love Your Transformation?</h4>
-        </div>
-        <p className="text-sm text-purple-800 mb-3">
-          Get the real {selectedCostume.name} costume from our partners and complete the look!
-        </p>
-        <div className="text-xs text-purple-700">
-          Partner links help keep our AI transformations free for everyone ❤️
-        </div>
-      </div>
+      {/* Affiliate Links */}
+      {selectedCostume.affiliateLinks.length > 0 && (
+        <Card className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 border-purple-300">
+          <div className="space-y-4">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Gift className="w-5 h-5 text-purple-600" />
+                <h4 className="font-semibold text-purple-900">Complete Your IRL Look!</h4>
+              </div>
+              <p className="text-sm text-purple-800">
+                Transform your AI creation into reality with authentic costumes
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              {selectedCostume.affiliateLinks.map(link => (
+                <div 
+                  key={link.id}
+                  className="bg-white/50 backdrop-blur-sm rounded-lg p-3 border border-purple-200 hover:bg-white/70 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs px-2 py-1 bg-purple-600 text-white rounded font-medium">
+                          {link.source}
+                        </span>
+                        {link.availability === 'in-stock' && (
+                          <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
+                            In Stock
+                          </span>
+                        )}
+                        {link.availability === 'pre-order' && (
+                          <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-medium">
+                            Pre-Order
+                          </span>
+                        )}
+                        {link.price && (
+                          <span className="text-sm font-bold text-purple-900">
+                            {link.price}
+                          </span>
+                        )}
+                      </div>
+                      <h5 className="font-medium text-purple-900 text-sm">
+                        {link.label}
+                      </h5>
+                      {link.description && (
+                        <p className="text-xs text-purple-700 mt-1">
+                          {link.description}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => {
+                        logEvent('affiliate_link_clicked', {
+                          linkId: link.id,
+                          source: link.source,
+                          costumeId: selectedCostume.id,
+                          costumeName: selectedCostume.name,
+                          price: link.price,
+                          userEmail: userEmail || 'guest'
+                        });
+                        window.open(link.url, '_blank', 'noopener,noreferrer');
+                      }}
+                      className="ml-3 px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-sm rounded-lg transition-colors"
+                    >
+                      Shop →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <h5 className="font-semibold text-amber-900 text-xs mb-2">💝 Affiliate Disclosure</h5>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                Waifu Material contains affiliate links. When you purchase through our partner links, 
+                we may earn a small commission at no additional cost to you. This helps us keep our 
+                AI transformation service free for everyone. We only recommend products that enhance 
+                your cosplay experience.
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
 
       {/* User Info */}
       {userEmail && (

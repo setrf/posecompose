@@ -76,20 +76,20 @@ export const TransformationResult = ({
     setIsSharing(true);
     
     try {
-      const shareText = `Just transformed into ${selectedCostume.name} with Waifu Material! ✨ ${selectedCostume.marketing.callToAction}`;
+      const shareText = `🎃 Just transformed into ${selectedCostume.name} with Waifu Material! ✨ ${selectedCostume.marketing.callToAction} - Try it yourself! 🎭`;
       const shareUrl = window.location.href;
       let shareLink = '';
 
       switch (platform) {
         case 'twitter':
-          shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+          shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=WaifuMaterial,Halloween,AICostume`;
           break;
         case 'facebook':
           shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
           break;
         case 'copy':
-          await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
-          toast.success('Link copied to clipboard!');
+          await navigator.clipboard.writeText(`${shareText}\n\nCreate your own transformation: ${shareUrl}`);
+          toast.success('🔗 Share link + costume info copied!');
           logEvent('transformation_link_copied', {
             costumeId: selectedCostume.id,
             costumeName: selectedCostume.name
@@ -104,7 +104,7 @@ export const TransformationResult = ({
           costumeId: selectedCostume.id,
           costumeName: selectedCostume.name
         });
-        toast.success(`Shared to ${platform}!`);
+        toast.success(`🎉 Shared to ${platform}! Share your transformation with #WaifuMaterial`);
       }
     } catch (error) {
       logEvent('transformation_share_failed', {
@@ -118,16 +118,7 @@ export const TransformationResult = ({
     }
   };
 
-  const handleAffiliateClick = () => {
-    logEvent('affiliate_link_clicked', {
-      costumeId: selectedCostume.id,
-      costumeName: selectedCostume.name,
-      userEmail: userEmail || 'guest'
-    });
-    
-    // In a real implementation, this would open the affiliate product page
-    toast.success(`Opening ${selectedCostume.name} costume store...`);
-  };
+  
 
   const handleLike = () => {
     logEvent('transformation_liked', {
@@ -239,15 +230,6 @@ export const TransformationResult = ({
             <Heart className="w-4 h-4 text-red-500" />
             Love It
           </Button>
-          
-          <Button
-            onClick={handleAffiliateClick}
-            variant="outline"
-            className="flex items-center gap-2 justify-center bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100"
-          >
-            <Gift className="w-4 h-4 text-purple-600" />
-            Real Costume
-          </Button>
         </div>
       </Card>
 
@@ -293,33 +275,95 @@ export const TransformationResult = ({
         </div>
       </Card>
 
-      {/* Affiliate Promotion */}
-      <Card className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 border-purple-300">
-        <div className="text-center space-y-3">
-          <div className="flex items-center justify-center gap-2">
-            <Gift className="w-6 h-6 text-purple-600" />
-            <h3 className="font-bold text-lg text-purple-900">
-              Complete Your Look!
-            </h3>
+      {/* Affiliate Links */}
+      {selectedCostume.affiliateLinks.length > 0 && (
+        <Card className="p-6 bg-gradient-to-r from-purple-100 to-pink-100 border-purple-300">
+          <div className="space-y-4">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Gift className="w-6 h-6 text-purple-600" />
+                <h3 className="font-bold text-lg text-purple-900">
+                  Complete Your IRL Look!
+                </h3>
+              </div>
+              <p className="text-purple-800">
+                Transform your AI creation into reality with authentic {selectedCostume.name} costumes
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {selectedCostume.affiliateLinks.map(link => (
+                <div 
+                  key={link.id}
+                  className="bg-white/50 backdrop-blur-sm rounded-lg p-4 border border-purple-200 hover:bg-white/70 transition-colors"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs px-2 py-1 bg-purple-600 text-white rounded font-medium">
+                        {link.source}
+                      </span>
+                      {link.availability === 'in-stock' && (
+                        <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded font-medium">
+                          ✅ In Stock
+                        </span>
+                      )}
+                      {link.availability === 'pre-order' && (
+                        <span className="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded font-medium">
+                          ⏳ Pre-Order
+                        </span>
+                      )}
+                      {link.price && (
+                        <span className="text-sm font-bold text-purple-900">
+                          💰 {link.price}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <h5 className="font-medium text-purple-900 text-sm">
+                      {link.label}
+                    </h5>
+                    
+                    {link.description && (
+                      <p className="text-xs text-purple-700">
+                        {link.description}
+                      </p>
+                    )}
+                    
+                    <Button
+                      onClick={() => {
+                        logEvent('affiliate_link_clicked', {
+                          linkId: link.id,
+                          source: link.source,
+                          costumeId: selectedCostume.id,
+                          costumeName: selectedCostume.name,
+                          price: link.price,
+                          userEmail: userEmail || 'guest'
+                        });
+                        window.open(link.url, '_blank', 'noopener,noreferrer');
+                      }}
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                      size="sm"
+                    >
+                      <ExternalLink className="w-3 h-3 mr-2" />
+                      Shop Now
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <h5 className="font-semibold text-amber-900 text-xs mb-2">💝 Affiliate Disclosure</h5>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                Waifu Material contains affiliate links. When you purchase through our partner links, 
+                we may earn a small commission at no additional cost to you. This helps us keep our 
+                AI transformation service free for everyone. We only recommend products that enhance 
+                your cosplay experience.
+              </p>
+            </div>
           </div>
-          
-          <p className="text-purple-800">
-            Love your {selectedCostume.name} transformation? Get the real costume and bring it to life offline!
-          </p>
-          
-          <Button 
-            onClick={handleAffiliateClick}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-          >
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Shop {selectedCostume.name} Costume
-          </Button>
-          
-          <p className="text-xs text-purple-700">
-            🎁 Partner purchases help keep our AI transformations free for everyone
-          </p>
-        </div>
-      </Card>
+        </Card>
+      )}
 
       {/* More Transformations */}
       <Card className="p-6">
@@ -352,17 +396,33 @@ export const TransformationResult = ({
         </div>
       </Card>
 
-      {/* Community Love */}
-      <div className="text-center space-y-2">
-        <p className="text-sm text-muted-foreground">
-          Share your transformation with #WaifuMaterial and join our community!
-        </p>
-        <div className="flex justify-center gap-2">
-          {['Amazing!', 'So realistic!', 'Love this!'].map((reaction, i) => (
-            <span key={i} className="text-xs px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-700">
+      {/* Community & Social CTAs */}
+      <div className="text-center space-y-4">
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground font-medium">
+            🎭 Join the Waifu Material Community! 🎭
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Tag us with #WaifuMaterial and follow @WaifuMaterial for daily AI costume magic! ✨
+          </p>
+        </div>
+        
+        <div className="flex justify-center gap-2 flex-wrap">
+          {['🎃 Amazing!', '✨ So magical!', '💜 Love my look!', '🎭 Perfect fit!', '🔥 Obsessed!'].map((reaction, i) => (
+            <span key={i} className="text-xs px-3 py-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-700 font-medium animate-fade-in" style={{ animationDelay: `${i * 0.1}s` }}>
               {reaction}
             </span>
           ))}
+        </div>
+        
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
+          <h4 className="font-semibold text-purple-900 mb-2">🎁 Special Halloween Perks!</h4>
+          <div className="text-xs text-purple-800 space-y-1">
+            <p>• Tag 3 friends for bonus transformation credits 👥</p>
+            <p>• Share with #WaifuMaterialHalloween for featured showcase 🌟</p>
+            <p>• Join our Discord for exclusive costume drops 💬</p>
+            <p>• Get early access to winter holiday collection ❄️</p>
+          </div>
         </div>
       </div>
 
