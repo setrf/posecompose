@@ -1,4 +1,4 @@
-import { useState } from "react";
+import type { CSSProperties } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sparkles, ArrowLeft, RefreshCw, GripVertical, ChevronUp, ChevronDown } from "lucide-react";
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
 import { FormatSelection } from "./FormatSelection";
 import type { Person } from "./GroupPhotoGenerator";
 
@@ -57,7 +57,7 @@ export const PersonSelection = ({
     onSelectionChange(selectedPeople.length === people.length ? [] : allIds);
   };
 
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     
     const items = Array.from(peopleOrder);
@@ -276,14 +276,18 @@ export const PersonSelection = ({
                                           ? 'shadow-lg border-primary opacity-90' 
                                           : 'hover:bg-gradient-secondary border-border'
                                       }`}
-                                      style={{
-                                        ...provided.draggableProps.style,
-                                        // Fix cursor offset issue - force auto positioning when dragging
-                                        ...(snapshot.isDragging && {
-                                          left: 'auto !important' as any,
-                                          top: 'auto !important' as any,
-                                        }),
-                                      }}
+                                      style={(() => {
+                                        const baseStyle = (provided.draggableProps.style ?? {}) as CSSProperties;
+                                        if (!snapshot.isDragging) {
+                                          return baseStyle;
+                                        }
+
+                                        return {
+                                          ...baseStyle,
+                                          left: "auto",
+                                          top: "auto",
+                                        };
+                                      })()}
                                     >
                                       <div 
                                         {...provided.dragHandleProps} 

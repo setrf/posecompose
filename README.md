@@ -1,276 +1,209 @@
-PoseCompose
-===========
+Waifu Material
+===============
 
-> 🏆 **Winner – Google DeepMind Nano Banana Hackathon (Kaggle), selected from 832 submissions worldwide.**
-
-Create realistic group photos by compositing individual people into a background scene using Google Gemini. Upload one background photo and multiple subject photos, remove backgrounds for subjects, arrange them, and generate a final composite image.
-
-Live Production: https://posecompose.com (canonical) and https://www.posecompose.com (content host)
+> "Spook up your selfie." Waifu Material lets gamers, cosplayers, and egirls slip into high-fantasy Halloween costumes without leaving their chair.
 
 Table of Contents
 -----------------
 
 - Overview
-- Features
+- Feature Highlights
+- User Journey
 - Architecture
-- Frontend (Vite/React/TS)
-- Backend API Proxy (Express)
-- Infrastructure (Nginx, TLS, domains)
-- Local Development
-- Build & Artifacts
-- Deployments
-- Configuration
-- Security
-- Caching & Performance
-- Operational Runbook
-- Troubleshooting
-- Directory Structure
-- Roadmap / Future Improvements
+  - Frontend
+  - Generative AI providers
+  - Data & content
+  - Hosting & deployment
+- Costume Catalog Format
+- Affiliate & Monetization
+- Development Workflow
+- Environment Setup
+- Running the App
+- Testing & QA
+- Logging & Analytics
+- Roadmap
 
 Overview
 --------
 
-PoseCompose is a static, single‑page application (SPA) built with Vite + React + TypeScript and styled with Tailwind + shadcn/ui. It communicates with a small server‑side Node/Express proxy that calls Google’s Generative Language (Gemini) API using a server‑held API key. The server key is never embedded in the browser bundle or exposed to clients.
+Waifu Material is a Vite + React + TypeScript single-page app that transforms a single user photo into multiple anime-inspired Halloween looks. Users pick up to three curated costumes, drop a selfie, provide an email for delivery, and let our AI pipeline (Gemini or OpenAI-compatible models such as `seedream-v4`) do the rest. Affiliate product callouts surface while renders bake, and a social share moment caps the experience. The same core flow will later pivot to winter holidays and other seasonal drops.
 
-Features
---------
+Feature Highlights
+------------------
 
-- Upload a background photo (or choose a sample scene).
-- Upload multiple person photos; remove backgrounds per person.
-- Arrange (order) selected people for composition.
-- Choose output aspect ratios and social formats.
-- Generate a final composite image via the Gemini API.
-- Download/view generated results.
+- **Curated costume presets** – 6–9 launch outfits with multiple reference shots, prompts, and affiliate product bundles.
+- **Multi-model AI stack** – Gemini proxy today, OpenAI-compatible providers tomorrow, all behind a single abstraction.
+- **Frictionless UX** – minimal inputs (selfie + email), auto-prompts, optional background cleanup, and glowing UI touches.
+- **Affiliate monetization** – during generation we surface Amazon/AliExpress links plus disclosure copy.
+- **Analytics-ready** – every key interaction (costume selection, email opt-in, provider usage, affiliate click, social share) is logged.
+
+User Journey
+------------
+
+1. **Pick your looks** – select up to three costumes from the catalog.
+2. **Upload selfie** – drop a single well-lit portrait (optional crop/background removal).
+3. **Enter email** – required to receive renders; we capture consent and store preferences.
+4. **Generation lounge** – while images render, showcase costume lore, product links, and other calls to action.
+5. **Shareable reveal** – present the AI outputs, download options, and cross-platform share/follow prompts.
 
 Architecture
 ------------
 
-- Frontend: Vite + React + TypeScript SPA compiled to static assets (HTML/CSS/JS) in `dist/`.
-- Backend: Node/Express service running on `127.0.0.1:4005` provides a single endpoint:
-  - `POST /api/gemini/generate-content` → forwards to Google’s Gemini generateContent endpoint using the server‑held API key.
-- Nginx:
-  - Serves static assets for the site (domain root).
-  - Proxies `/api/` requests to the backend service.
-  - TLS is provided by Let’s Encrypt via Certbot; HSTS is enabled.
-  - Apex domain redirects permanently to the www host for canonicalization.
+### Frontend
+- Vite 5 + React 18 + TypeScript.
+- Tailwind CSS + shadcn/ui components customized for a neon/anime aesthetic.
+- State orchestration handled inside `src/components/WaifuMaterialExperience.tsx` with context-friendly helpers.
 
-Frontend (Vite/React/TS)
+### Generative AI providers
+- Abstraction layer in `src/lib/providers.ts` selects provider + model at runtime.
+- Supported out of the gate:
+  - Google Gemini via existing `/api/gemini/generate-content` proxy.
+  - OpenAI-compatible APIs (e.g., Together, Fireworks, vLLM) routed through configurable base URL + key.
+  - Model registry includes `seedream-v4` with room for future additions.
+- Reference image bundles per costume sent alongside the user selfie.
+
+### Data & content
+- Costume catalog initially loaded from `src/constants/costumes.ts` (JSON-like module).
+- Each costume entry defines metadata, prompts, reference images (2–4), and affiliate links.
+- Roadmap includes migrating catalog + analytics to Neon or Supabase with an accompanying dashboard.
+
+### Hosting & deployment
+- Primary target: **Vercel** (build command `bun run build`, output `dist`).
+- Optional CDN/static asset hosting via **Backblaze B2** for heavy costume galleries; upload script TBD.
+- Environment configuration supplied via Vercel project settings (see below).
+
+### Diagram library
+- All major systems, timelines, and complex flows are documented with Mermaid diagrams. Source files reside in `docs/diagrams/` alongside exported SVG/PNG assets for offline viewing.
+- System overview example:
+
+```mermaid
+%% Waifu Material System Overview
+graph TD
+  User["User Selfie + Email"] --> CostumeUI["Costume Selection UI"]
+  CostumeUI --> EmailGate["Email Capture & Consent"]
+  EmailGate --> GenOrchestrator["Generation Orchestrator"]
+  CostumeCatalog[("Costume Catalog\n(JSON / future DB)")] --> GenOrchestrator
+  GenOrchestrator -->|Gemini Proxy| GeminiAPI["Google Gemini"]
+  GenOrchestrator -->|OpenAI-Compatible| OpenAIProvider["seedream-v4 / other models"]
+  GenOrchestrator --> RenderResults["Generated Waifu Fits"]
+  RenderResults --> Sharing["Share & Follow Prompts"]
+  EmailGate --> EmailService["Email Delivery Stub"]
+  GenOrchestrator --> AffiliateLinks["Affiliate Links (Amazon/AliExpress)"]
+  AffiliateLinks --> Sharing
+```
+
+> Exported assets: see `docs/diagrams/system-overview.svg` and `docs/diagrams/system-overview.png` (regenerate via Mermaid CLI when diagrams change).
+
+Costume Catalog Format
+----------------------
+
+```ts
+type CostumeLink = {
+  label: string;
+  url: string;
+  source: "Amazon" | "AliExpress" | "Etsy" | "Other";
+};
+
+type CostumePreset = {
+  id: string;
+  name: string;
+  description: string;
+  prompt: string;
+  tags: string[];
+  referenceImages: string[]; // imported asset paths
+  affiliateLinks: CostumeLink[];
+  recommendedModel?: string; // e.g., "seedream-v4"
+};
+```
+
+Initial data lives in `src/constants/costumes.ts`. When we graduate to Neon/Supabase, we will preserve the schema and sync strategy documented in `docs/TODO.md`.
+
+Affiliate & Monetization
 ------------------------
 
-- Entry: `index.html`, source under `src/`.
-- UI toolkit: Tailwind CSS + shadcn/ui components.
-- Key components:
-  - `GroupPhotoGenerator.tsx` – orchestrates steps and generation flow.
-  - `BackgroundUpload.tsx` – background chooser and file uploads.
-  - `PersonUpload.tsx` – person photo uploads; triggers background removal.
-  - `PersonSelection.tsx` – selection and ordering of subjects.
-  - `ResultDisplay.tsx` – shows/completes the generated composite.
-  - `FormatSelection.tsx` – social format presets and aspect ratios.
-- Image processing (client‑side):
-  - Background removal is done via API calls to Gemini.
-  - People images are drawn side‑by‑side on a temporary canvas and then composited into a final canvas sized to the target aspect ratio. The stitched “people strip” is exported as JPEG to ensure compatibility with the upstream API.
-  - The final request sends two inline images to Gemini: the background (JPEG) and the stitched people (JPEG).
+- Affiliate links appear during the generation state and within the results screen.
+- Each link logs `affiliate_link_clicked` with costume/model context.
+- Always show disclosure copy (FTC compliance) and ensure tracking parameters are encapsulated in the catalog data.
 
-Backend API Proxy (Express)
---------------------------
+Development Workflow
+--------------------
 
-- Location on server: `/opt/posecompose-api`.
-- Service file: `/etc/systemd/system/posecompose-api.service` (enabled at boot).
-- Env file (owner root, mode 600): `/etc/posecompose-api.env` containing:
-  - `GEMINI_API_KEY=<YOUR_SERVER_SIDE_KEY>` (stored securely, never sent to clients)
-  - `PORT=4005`
-- Server code: `server.js` uses Express JSON body parsing and forwards requests to:
-  - `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent`
-  - API key is supplied via `x-goog-api-key` header.
-- Health endpoint: `GET /healthz` → `{ ok: true }`.
-- JSON body limit: 30 MB (to match Nginx limits and large base64 payloads).
+- **Bun-first** toolchain. npm remains a fallback only when Bun is unavailable.
+- Every major change ships on a feature branch with tests + docs updated in lockstep.
+- Core documentation to update per change: README, AGENTS.md, CHANGELOG.md, and `docs/TODO.md`.
+- Specialized agents/droids may own discrete areas (UI/theme, AI stack, analytics/docs, etc.).
 
-Infrastructure (Nginx, TLS, domains)
-------------------------------------
-
-- Static site root: `/var/www/apps/posecompose` (deployed build artifacts).
-- Vhost: `/etc/nginx/sites-available/posecompose.com` (symlinked in `sites-enabled`).
-- Canonical host: `www.posecompose.com` serves content; apex `posecompose.com` redirects 301 to `https://www.posecompose.com`.
-- TLS: Let’s Encrypt/Certbot, auto‑renewal timer managed by systemd.
-- Security headers: HSTS, X‑Content‑Type‑Options, X‑Frame‑Options, Referrer‑Policy.
-- Caching:
-  - HTML (root/index.html): `Cache-Control: no-store, no-cache, must-revalidate, max-age=0`.
-  - Assets (`.css/.js/.png/.jpg/.jpeg/.gif/.svg/.ico/.webmanifest`): `Cache-Control: public, max-age=604800, immutable` with 7‑day expiry.
-- Favicon: explicitly disabled (returns 204 with `no-store`) to avoid stale icons.
-
-Local Development
+Environment Setup
 -----------------
 
-Requirements
-- Node.js 18+ and npm
+Required variables (configure in `.env.local` or Vercel project settings):
 
-Install and run
+| Variable | Purpose |
+| --- | --- |
+| `VITE_GEMINI_PROXY_URL` | Overrides default `/api/gemini/generate-content` if needed. |
+| `VITE_OPENAI_API_BASE` | Base URL for OpenAI-compatible provider (e.g., https://api.together.xyz/v1). |
+| `VITE_OPENAI_API_KEY` | API key/token for the selected OpenAI-compatible provider (never ship to clients; use proxy when possible). |
+| `VITE_DEFAULT_MODEL` | Model id to preselect (e.g., `seedream-v4`). |
+| `VITE_AFFILIATE_DISCLOSURE` | Optional disclosure copy override. |
+| `VITE_EMAIL_ENDPOINT` | Endpoint to receive email opt-ins (stub-friendly; default logs to console). |
+
+Running the App
+---------------
+
+Install & run (Bun – preferred):
+
+```sh
+bun install
+bun run dev
+```
+
+Install & run (npm – fallback):
+
 ```sh
 npm ci
 npm run dev
 ```
 
-Open http://localhost:8080
+> Bun blocks certain native postinstall scripts by default. If prompted, inspect `bun pm untrusted` and trust known libraries (e.g., `@swc/core`) with `bun pm trust`.
 
-Build & Artifacts
------------------
+Build artifacts (Vercel-compatible):
 
-Build for production
+```sh
+bun run build
+```
+
+Fallback:
+
 ```sh
 npm run build
 ```
 
-Outputs to `dist/` with hashed assets and `index.html` for static hosting at a domain root. If hosting under a subpath (e.g., `/apps/posecompose/`), build with a base path:
-```sh
-npm run build -- --base=/apps/posecompose/
-```
+Outputs land in `dist/`. Deploy that directory or rely on Vercel’s static output.
 
-Deployments
------------
+Testing & QA
+------------
 
-Static files
-- Deployed to: `/var/www/apps/posecompose`
-- Helper command on the server:
-```sh
-/usr/local/bin/deploy_static /root/Projects/apps/posecompose-repo/dist posecompose
-```
+- Lint: `bun run lint` (or `npm run lint`).
+- Unit tests (coming soon) will live under `src/__tests__` and execute via `bun test`.
+- Manual QA checklist lives in `docs/TODO.md` (kept evergreen per feature branch).
 
-Nginx vhost (summary)
-- Content host (HTTPS): `www.posecompose.com` serves from `/var/www/apps/posecompose` and proxies `/api/`.
-- Apex redirect (HTTPS): `posecompose.com` → `https://www.posecompose.com$request_uri`.
-- HTTP: both apex and www redirect to HTTPS www.
-
-Backend service management
-```sh
-# Check status
-systemctl status posecompose-api.service
-
-# View logs
-journalctl -u posecompose-api -n 200 -f
-
-# Restart after changes
-sudo systemctl restart posecompose-api.service
-```
-
-Nginx operations
-```sh
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-Configuration
--------------
-
-Environment / Secrets
-- Google Gemini API key is stored server‑side in `/etc/posecompose-api.env` and read by the backend service.
-- Do not embed keys in the frontend; the app calls the server proxy at `/api/gemini/generate-content`.
-
-Body/Request Sizes
-- Nginx `client_max_body_size` = 30 MB on the vhost.
-- Express JSON limit = 30 MB.
-
-Domains & Canonicalization
-- Canonical content domain: `www.posecompose.com`.
-- Apex `posecompose.com` always 301 redirects to the www host to avoid split caching and ensure consistent linking.
-
-Security
---------
-
-- API key protection: Key exists only in `/etc/posecompose-api.env`, never sent to the client or stored in static assets.
-- TLS + HSTS: Enforced via Nginx configuration; renewals handled by Certbot.
-- Favicon disabled: Prevents stale browser caching of icons when branding changes.
-- Optional hardening not yet enabled (candidates):
-  - Content Security Policy (CSP) tuned for the current stack.
-  - Nginx rate‑limiting on `/api/` to mitigate abuse.
-
-Caching & Performance
----------------------
-
-- HTML is marked as no‑store/no‑cache to prevent stale app shells.
-- Static assets are long‑cached and content‑hashed, safe to cache for 7 days.
-- Client uses canvas compositing and exports JPEG (quality 0.9) to reduce payload size and maximize API compatibility.
-
-Analytics
----------
-
-The application includes Google Analytics (G-E1EJSR0NEX) for tracking:
-- Page views and user sessions
-- User interactions and conversion events
-- Traffic sources and user behavior
-- Performance metrics
-
-The tracking code is loaded in `index.html` and automatically tracks page views. No additional configuration required.
-
-Operational Runbook
+Logging & Analytics
 -------------------
 
-Deploy a new build
-```sh
-cd /root/Projects/apps/posecompose-repo
-npm ci
-npm run build
-/usr/local/bin/deploy_static dist posecompose
-sudo nginx -t && sudo systemctl reload nginx
-```
+- Logging helper in `src/lib/logger.ts` now captures:
+  - `costume_selected`, `costume_deselected`
+  - `email_submitted`, `email_submit_failed`
+  - `generation_started/succeeded/failed`
+  - `affiliate_link_clicked`
+  - `share_clicked`
+  - Provider/model usage metadata
+- Data is mirrored to console plus optional beacon endpoint (`VITE_LOG_ENDPOINT`).
 
-Rotate the API key
-```sh
-sudo editor /etc/posecompose-api.env   # update GEMINI_API_KEY
-sudo systemctl restart posecompose-api.service
-```
+Roadmap
+-------
 
-Check backend health
-```sh
-curl -s http://127.0.0.1:4005/healthz
-```
-
-Troubleshooting
----------------
-
-Symptoms and remedies:
-
-- 404 on `/api/gemini/generate-content`:
-  - Ensure Nginx keeps the `/api/` prefix intact: `proxy_pass http://127.0.0.1:4005;` (no trailing slash).
-  - Confirm backend is running: `systemctl status posecompose-api.service`.
-
-- 413 Request Entity Too Large:
-  - Increase Nginx `client_max_body_size` and Express JSON limit (both set to 30 MB here).
-
-- 400 INVALID_ARGUMENT from Gemini:
-  - Ensure images are sent as JPEG (no alpha) and sizes are reasonable. The app exports stitched people as JPEG.
-  - Retry with smaller images or fewer subjects if bandwidth‑constrained.
-
-- Apex shows old version while www is fresh:
-  - This app enforces apex → www redirect to avoid split cache. If you ever disable the redirect, keep HTML no‑store headers.
-
-Directory Structure
--------------------
-
-```
-apps/posecompose-repo/
-├─ index.html
-├─ package.json
-├─ vite.config.ts
-├─ public/
-│  ├─ placeholder.svg
-│  └─ robots.txt
-├─ src/
-│  ├─ components/
-│  │  ├─ GroupPhotoGenerator.tsx
-│  │  ├─ BackgroundUpload.tsx
-│  │  ├─ PersonUpload.tsx
-│  │  ├─ PersonSelection.tsx
-│  │  ├─ ResultDisplay.tsx
-│  │  ├─ FormatSelection.tsx
-│  │  └─ ui/*
-│  └─ main.tsx …
-└─ dist/ (build output)
-```
-
-Roadmap / Future Improvements
------------------------------
-
-- Add CSP and strict security headers tailored to current external resources (Google Fonts, etc.).
-- Implement Nginx rate limiting for `/api/` to throttle abusive traffic.
-- Add GitHub Actions workflow for automated build/deploy over SSH.
-- Add client‑side downscaling of very large uploads to reduce latency.
-- Optional branding (favicon/social image) pipeline.
+- **Phase 1** (this overhaul): neon theme, costume catalog, provider abstraction, affiliate surfacing, email gating, Vercel deployment docs.
+- **Phase 2**: dashboard (Supabase/Neon) for managing costumes, tracking stats, and adjusting theme without redeploys.
+- **Seasonal pivots**: convert catalog and theme to winter holidays post-Halloween.
+- **Backend upgrades**: full email delivery + analytics storage, asset CDN on Backblaze B2.
+- **Workflow automation**: CI on Vercel/GitHub Actions with lint/test gates and preview deployments.

@@ -1,0 +1,13 @@
+%% Waifu Material System Overview
+graph TD
+  User["User Selfie + Email"] --> CostumeUI["Costume Selection UI"]
+  CostumeUI --> EmailGate["Email Capture & Consent"]
+  EmailGate --> GenOrchestrator["Generation Orchestrator"]
+  CostumeCatalog[("Costume Catalog\n(JSON / future DB)")] --> GenOrchestrator
+  GenOrchestrator -->|Gemini Proxy| GeminiAPI["Google Gemini"]
+  GenOrchestrator -->|OpenAI-Compatible| OpenAIProvider["seedream-v4 / other models"]
+  GenOrchestrator --> RenderResults["Generated Waifu Fits"]
+  RenderResults --> Sharing["Share & Follow Prompts"]
+  EmailGate --> EmailService["Email Delivery Stub"]
+  GenOrchestrator --> AffiliateLinks["Affiliate Links (Amazon/AliExpress)"]
+  AffiliateLinks --> Sharing

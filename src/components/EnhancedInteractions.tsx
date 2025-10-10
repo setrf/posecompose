@@ -230,11 +230,3 @@ export const ProgressRing = ({
     </div>
   );
 };
-
-export const MicroInteractions = {
-  FloatingLabelInput,
-  PulseButton,
-  InteractiveCard,
-  LoadingDots,
-  ProgressRing
-};

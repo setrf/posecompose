@@ -8,159 +8,160 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Enhanced Background System */
-    --background: 250 20% 98%;
-    --background-secondary: 248 25% 96%;
-    --foreground: 220 25% 12%;
+    /* Waifu Material - Dark Anime Background System */
+    --background: 280 40% 8%;
+    --background-secondary: 280 35% 6%;
+    --foreground: 330 30% 95%;
 
-    /* Enhanced Card System */
-    --card: 0 0% 100%;
-    --card-secondary: 250 50% 98%;
-    --card-foreground: 220 25% 12%;
+    /* Enhanced Card System - Glassmorphic */
+    --card: 280 30% 12% / 0.8;
+    --card-secondary: 280 25% 10% / 0.6;
+    --card-foreground: 330 20% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover: 280 30% 12% / 0.9;
+    --popover-foreground: 330 20% 90%;
 
-    /* Enhanced Primary Colors - Professional Dark Blue */
-    --primary: 220 60% 35%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 50% 55%;
-    --primary-hover: 220 60% 30%;
-    --primary-muted: 220 30% 96%;
+    /* Neon Primary Colors - Anime Pink/Purple */
+    --primary: 320 100% 60%;
+    --primary-foreground: 280 30% 8%;
+    --primary-glow: 320 100% 70%;
+    --primary-hover: 320 100% 65%;
+    --primary-muted: 320 80% 25%;
 
-    /* Enhanced Secondary Colors - Professional Gray */
-    --secondary: 215 10% 88%;
-    --secondary-foreground: 220 25% 20%;
-    --secondary-hover: 215 10% 82%;
+    /* Neon Secondary Colors - Electric Purple */
+    --secondary: 270 100% 60%;
+    --secondary-foreground: 280 30% 8%;
+    --secondary-hover: 270 100% 65%;
 
-    /* Enhanced Muted Colors - Warm Gray */
-    --muted: 215 8% 90%;
-    --muted-foreground: 220 15% 40%;
+    /* Muted Colors - Dark Glass */
+    --muted: 280 25% 15%;
+    --muted-foreground: 330 15% 60%;
 
-    /* Enhanced Accent Colors - Light Gray */
-    --accent: 215 15% 93%;
-    --accent-foreground: 220 25% 25%;
-    --accent-hover: 215 15% 87%;
+    /* Accent Colors - Neon Cyan */
+    --accent: 180 100% 65%;
+    --accent-foreground: 280 30% 8%;
+    --accent-hover: 180 100% 70%;
 
-    /* Semantic Colors */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --success-muted: 142 76% 95%;
+    /* Semantic Neon Colors */
+    --success: 142 100% 55%;
+    --success-foreground: 280 30% 8%;
+    --success-muted: 142 80% 20%;
 
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --warning-muted: 38 92% 95%;
+    --warning: 38 100% 60%;
+    --warning-foreground: 280 30% 8%;
+    --warning-muted: 38 80% 20%;
 
-    --info: 199 89% 48%;
-    --info-foreground: 0 0% 100%;
-    --info-muted: 199 89% 95%;
+    --info: 180 100% 65%;
+    --info-foreground: 280 30% 8%;
+    --info-muted: 180 80% 20%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --destructive-muted: 0 84% 95%;
+    --destructive: 0 100% 65%;
+    --destructive-foreground: 280 30% 8%;
+    --destructive-muted: 0 80% 20%;
 
-    /* Enhanced Border & Input - Professional Gray */
-    --border: 215 12% 82%;
-    --border-muted: 215 8% 87%;
-    --input: 215 12% 82%;
-    --ring: 220 60% 35%;
+    /* Neon Border & Input - Glowing */
+    --border: 320 100% 30%;
+    --border-muted: 280 30% 20%;
+    --input: 280 25% 18%;
+    --ring: 320 100% 60%;
 
-    /* Typography System */
-    --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Anime Typography System */
+    --font-display: 'Space Grotesk', 'Bebas Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', 'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    /* Enhanced Design Tokens - Professional Dark Blue & Gray */
-    --gradient-primary: linear-gradient(135deg, hsl(220 60% 35%), hsl(215 40% 45%));
-    --gradient-secondary: linear-gradient(135deg, hsl(215 15% 96%), hsl(210 20% 94%));
-    --gradient-accent: linear-gradient(135deg, hsl(215 15% 93%), hsl(210 20% 91%));
-    --gradient-hero: linear-gradient(135deg, hsl(220 60% 35%) 0%, hsl(215 40% 45%) 50%, hsl(210 30% 55%) 100%);
+    /* Waifu Material Gradients - Neon Vibes */
+    --gradient-primary: linear-gradient(135deg, hsl(320 100% 60%) 0%, hsl(270 100% 60%) 50%, hsl(320 100% 70%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(280 40% 15%) 0%, hsl(270 30% 20%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(180 100% 60%) 0%, hsl(180 100% 70%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(280 40% 8%) 0%, hsl(320 50% 12%) 25%, hsl(270 50% 10%) 50%, hsl(280 40% 8%) 100%);
     
-    /* Enhanced Shadows - Professional & Subtle */
-    --shadow-elegant: 0 10px 40px -10px hsl(220 60% 35% / 0.15);
-    --shadow-card: 0 4px 20px -4px hsl(220 25% 12% / 0.06);
-    --shadow-card-hover: 0 8px 30px -6px hsl(220 25% 12% / 0.10);
-    --shadow-glow: 0 0 30px hsl(220 50% 55% / 0.2);
+    /* Neon Shadows & Glows */
+    --shadow-elegant: 0 20px 60px -20px hsl(320 100% 60% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.4);
+    --shadow-card-hover: 0 16px 48px -12px hsl(320 100% 60% / 0.2);
+    --shadow-glow: 0 0 40px hsl(320 100% 60% / 0.4), 0 0 80px hsl(270 100% 60% / 0.2);
     
-    /* Enhanced Transitions */
+    /* Smooth Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     --transition-fast: all 0.15s ease-out;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 20% 20%;
-    --sidebar-primary: 220 25% 12%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 248 15% 94%;
-    --sidebar-accent-foreground: 220 25% 12%;
-    --sidebar-border: 248 15% 88%;
-    --sidebar-ring: 220 60% 35%;
+    --sidebar-background: 280 40% 8% / 0.95;
+    --sidebar-foreground: 330 20% 85%;
+    --sidebar-primary: 320 100% 60%;
+    --sidebar-primary-foreground: 280 30% 8%;
+    --sidebar-accent: 280 25% 15%;
+    --sidebar-accent-foreground: 330 20% 85%;
+    --sidebar-border: 320 100% 30%;
+    --sidebar-ring: 320 100% 60%;
   }
 
   .dark {
-    --background: 220 25% 6%;
-    --background-secondary: 220 25% 8%;
-    --foreground: 210 40% 95%;
+    /* Waifu Material Dark Mode - Enhanced Neon */
+    --background: 280 35% 5%;
+    --background-secondary: 280 30% 3%;
+    --foreground: 330 30% 98%;
 
-    --card: 220 25% 8%;
-    --card-secondary: 220 25% 10%;
-    --card-foreground: 210 40% 95%;
+    --card: 280 25% 10% / 0.9;
+    --card-secondary: 280 20% 8% / 0.7;
+    --card-foreground: 330 20% 95%;
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 40% 95%;
+    --popover: 280 25% 10% / 0.95;
+    --popover-foreground: 330 20% 95%;
 
-    --primary: 220 60% 45%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 220 50% 65%;
-    --primary-hover: 220 60% 50%;
-    --primary-muted: 220 30% 18%;
+    --primary: 320 100% 65%;
+    --primary-foreground: 280 30% 5%;
+    --primary-glow: 320 100% 75%;
+    --primary-hover: 320 100% 70%;
+    --primary-muted: 320 85% 20%;
 
-    --secondary: 215 8% 18%;
-    --secondary-foreground: 210 20% 85%;
-    --secondary-hover: 215 8% 22%;
+    --secondary: 270 100% 65%;
+    --secondary-foreground: 280 30% 5%;
+    --secondary-hover: 270 100% 70%;
 
-    --muted: 215 8% 16%;
-    --muted-foreground: 210 15% 60%;
+    --muted: 280 20% 12%;
+    --muted-foreground: 330 15% 65%;
 
-    --accent: 215 12% 22%;
-    --accent-foreground: 210 20% 85%;
-    --accent-hover: 215 12% 26%;
+    --accent: 180 100% 70%;
+    --accent-foreground: 280 30% 5%;
+    --accent-hover: 180 100% 75%;
 
-    /* Dark mode semantic colors */
-    --success: 142 76% 45%;
-    --success-foreground: 220 25% 6%;
-    --success-muted: 142 50% 15%;
+    /* Dark mode neon semantic colors */
+    --success: 142 100% 60%;
+    --success-foreground: 280 30% 5%;
+    --success-muted: 142 85% 15%;
 
-    --warning: 38 92% 60%;
-    --warning-foreground: 220 25% 6%;
-    --warning-muted: 38 60% 15%;
+    --warning: 38 100% 65%;
+    --warning-foreground: 280 30% 5%;
+    --warning-muted: 38 85% 15%;
 
-    --info: 199 89% 60%;
-    --info-foreground: 220 25% 6%;
-    --info-muted: 199 60% 15%;
+    --info: 180 100% 70%;
+    --info-foreground: 280 30% 5%;
+    --info-muted: 180 85% 15%;
 
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 220 25% 6%;
-    --destructive-muted: 0 60% 15%;
+    --destructive: 0 100% 70%;
+    --destructive-foreground: 280 30% 5%;
+    --destructive-muted: 0 85% 15%;
 
-    --border: 215 10% 22%;
-    --border-muted: 215 8% 18%;
-    --input: 215 10% 22%;
-    --ring: 220 60% 45%;
+    --border: 320 100% 25%;
+    --border-muted: 280 25% 15%;
+    --input: 280 20% 12%;
+    --ring: 320 100% 65%;
 
-    /* Dark mode shadows */
-    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.25);
-    --shadow-card-hover: 0 8px 30px -6px hsl(0 0% 0% / 0.35);
+    /* Enhanced dark mode neon shadows */
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.6);
+    --shadow-card-hover: 0 16px 48px -12px hsl(320 100% 60% / 0.3);
 
-    --sidebar-background: 220 25% 8%;
-    --sidebar-foreground: 210 40% 90%;
-    --sidebar-primary: 220 60% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 8% 18%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 215 10% 20%;
-    --sidebar-ring: 220 60% 45%;
+    --sidebar-background: 280 35% 5% / 0.95;
+    --sidebar-foreground: 330 20% 95%;
+    --sidebar-primary: 320 100% 65%;
+    --sidebar-primary-foreground: 280 30% 5%;
+    --sidebar-accent: 280 20% 12%;
+    --sidebar-accent-foreground: 330 20% 95%;
+    --sidebar-border: 320 100% 25%;
+    --sidebar-ring: 320 100% 65%;
   }
 }
 
@@ -184,44 +185,88 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Enhanced hover effects */
+  /* Enhanced hover effects with neon */
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover hover:shadow-glow;
   }
 
   .hover-glow {
     @apply transition-all duration-300 hover:shadow-glow;
   }
 
-  /* Interactive elements */
+  /* Waifu Material glassmorphic elements */
   .glass-effect {
-    @apply bg-white/20 backdrop-blur-md border border-white/30;
+    @apply bg-card/30 backdrop-blur-md border border-primary/30 shadow-glow;
   }
 
   .dark .glass-effect {
-    @apply bg-black/20 border-white/10;
+    @apply bg-card/40 border-primary/40;
+  }
+
+  .neon-text {
+    @apply text-primary shadow-lg;
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 40px hsl(var(--primary) / 0.4);
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary via-primary-glow to-accent-foreground bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent;
+    text-shadow: 0 0 30px hsl(var(--primary) / 0.3);
   }
 
   /* High contrast text for better readability */
   .text-on-gradient {
-    @apply text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] font-medium;
+    @apply text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-medium;
   }
 
   .text-on-glass {
-    @apply text-foreground drop-shadow-sm;
+    @apply text-foreground drop-shadow-md;
   }
 
-  /* Improved focus states */
+  /* Neon button effects */
+  .neon-button {
+    @apply relative overflow-hidden transition-all duration-300 bg-primary text-primary-foreground border-2 border-primary hover:border-primary-glow hover:shadow-glow;
+  }
+
+  .neon-button::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700;
+  }
+
+  /* Improved focus states with neon */
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
-  /* Better contrast for cards on gradients */
+  /* Neon glass cards */
+  .neon-card {
+    @apply bg-card/60 backdrop-blur-lg border border-primary/30 shadow-glow hover:bg-card/80 hover:border-primary/50 transition-all duration-300;
+  }
+
   .card-on-gradient {
-    @apply bg-card/95 backdrop-blur-sm border border-border/50 shadow-lg;
+    @apply bg-card/95 backdrop-blur-xl border border-primary/40 shadow-glow hover:bg-card/90;
+  }
+
+  /* Animated borders for neon effects */
+  .neon-border {
+    position: relative;
+    @apply border border-primary/50 rounded-lg;
+  }
+
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    @apply rounded-lg bg-gradient-to-r from-primary via-secondary to-accent opacity-30 blur-sm -z-10;
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  /* Floating animation for elements */
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Glow pulse animation */
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
   }
 }
