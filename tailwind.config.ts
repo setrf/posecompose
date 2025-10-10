@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -149,6 +150,18 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.3)" },
           "50%": { boxShadow: "0 0 30px hsl(var(--primary) / 0.5)" },
         },
+        "neon-pulse": {
+          "0%, 100%": { opacity: "0.3", transform: "scale(1)" },
+          "50%": { opacity: "0.6", transform: "scale(1.02)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2)" },
+          "50%": { boxShadow: "0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -160,8 +173,11 @@ export default {
         "slide-in-right": "slide-in-right 0.3s ease-out",
         "slide-out-right": "slide-out-right 0.3s ease-out",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "neon-pulse": "neon-pulse 2s ease-in-out infinite",
+        "float": "float 3s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
