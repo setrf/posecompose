@@ -15,9 +15,9 @@ Rebrand the existing experience into Waifu Material and deliver a polished Hallo
    - Import 6–9 launch costumes with reference images and prompts. ✅
    - Document migration path to Neon/Supabase. ✅
 
-3. **Flow Rework & UX Copy**  _(affiliates-comms-droid)_
-   - Reframe screens: costume selection → selfie upload → email capture → generation lounge → results/share.
-   - Implement disclosure copy, affiliate link presentation, and social CTAs.
+3. **Flow Rework & UX Copy**  _(affiliates-comms-droid)_ ✅ **COMPLETED**
+   - Reframe screens: costume selection → selfie upload → email capture → generation lounge → results/share. ✅
+   - Implement disclosure copy, affiliate link presentation, and social CTAs. ✅
 
 4. **AI Provider Abstraction**  _(ai-pipeline-droid)_
    - Support Gemini proxy + OpenAI-compatible providers (incl. `seedream-v4`).

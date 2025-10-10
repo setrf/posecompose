@@ -380,7 +380,7 @@ const CostumeTransformationFlow = () => {
             </p>
             <div className="mt-6 flex items-center justify-center space-x-2 text-white/80 animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium drop-shadow-sm neon-text">Halloween Collection 2024</span>
+              <span className="text-sm font-medium drop-shadow-sm neon-text">Halloween Collection 2025</span>
             </div>
           </div>
 

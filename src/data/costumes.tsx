@@ -126,8 +126,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: true,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'Perfect for Halloween and alternative fashion events',
     inspiration: 'Victorian gothic fashion meets Japanese lolita subculture'
@@ -240,8 +240,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: true,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'High tech complexity, requires good reference for cybernetic details',
     inspiration: 'Ghost in the Shell meets Seven Samurai'
@@ -354,8 +354,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: false,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'Classic anime magical girl trope, popular with cosplay community',
     inspiration: 'Sailor Moon and magical girl anime genre'
@@ -468,8 +468,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: false,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'Classic Halloween costume, relatively easy transformation',
     inspiration: 'Dracula, Interview with the Vampire, gothic romance'
@@ -582,8 +582,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: false,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'Perfect for those who want cute rather than scary Halloween',
     inspiration: 'Japanese kawaii culture meets friendly ghost stories'
@@ -707,8 +707,8 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
     isNew: true,
     isFeatured: false,
     
-    createdAt: '2024-10-31T00:00:00Z',
-    updatedAt: '2024-10-31T00:00:00Z',
+    createdAt: '2025-10-09T23:29:00Z',
+    updatedAt: '2025-10-09T23:29:00Z',
     
     notes: 'Modern witch aesthetic, appeals to contemporary mystical interests',
     inspiration: 'Modern witchcraft, crystal healing, dark fantasy manga'
