@@ -40,6 +40,16 @@ export interface TransformationPrompt {
   detailEnhancements: string[];
 }
 
+export interface CostumeAffiliateLink {
+  id: string;
+  label: string;
+  url: string;
+  source: 'Amazon' | 'AliExpress' | 'Etsy' | 'SpiritHalloween' | 'Other';
+  price?: string;
+  availability?: 'in-stock' | 'out-of-stock' | 'pre-order';
+  description?: string;
+}
+
 export interface CostumePreset {
   id: string;
   name: string;
@@ -61,6 +71,9 @@ export interface CostumePreset {
   
   // Marketing
   marketing: CostumeMarketing;
+  
+  // Affiliate links
+  affiliateLinks: CostumeAffiliateLink[];
   
   // Status & availability
   isActive: boolean;

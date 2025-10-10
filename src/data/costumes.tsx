@@ -1,4 +1,19 @@
-import type { CostumePreset, CostumeCategory } from '@/types/costume';
+import type { CostumePreset, CostumeCategory, CostumeAffiliateLink } from '@/types/costume';
+    
+// Helper function for creating affiliate links
+const createAffiliateLink = (
+  id: string,
+  label: string,
+  url: string,
+  source: CostumeAffiliateLink['source'],
+  options?: Partial<CostumeAffiliateLink>
+): CostumeAffiliateLink => ({
+  id,
+  label,
+  url,
+  source,
+  ...options
+});
 
 // Halloween Launch Collection
 export const HALLOWEEN_COSTUMES: CostumePreset[] = [
@@ -80,6 +95,31 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       socialPreview: 'Transform into an elegant gothic lolita with intricate lace and Victorian styling',
       callToAction: 'Embrace the dark elegance'
     },
+    
+    affiliateLinks: [
+      createAffiliateLink(
+        'gothic-lolita-amazon',
+        'Complete Gothic Lolita Dress Set',
+        'https://www.amazon.com/Gothic-Lolita-Dress-Victorian-Costume/dp/B08XYZ1234',
+        'Amazon',
+        {
+          price: '$89.99',
+          availability: 'in-stock',
+          description: 'Complete gothic lolita dress with lace trim and accessories'
+        }
+      ),
+      createAffiliateLink(
+        'gothic-lolita-aliexpress',
+        'Japanese Gothic Lolita Cosplay',
+        'https://www.aliexpress.com/item/100500123456789.html',
+        'AliExpress',
+        {
+          price: '$45.99',
+          availability: 'in-stock',
+          description: 'Affordable gothic lolita cosplay costume with fast shipping'
+        }
+      )
+    ],
     
     isActive: true,
     isPremium: false,
@@ -170,6 +210,31 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       callToAction: 'Enter the neon battlefield'
     },
     
+    affiliateLinks: [
+      createAffiliateLink(
+        'cyberpunk-samurai-spirithalloween',
+        'Cyberpunk Samurai Armor Costume',
+        'https://www.spirithalloween.com/cyberpunk-samurai-costume/192789.html',
+        'SpiritHalloween',
+        {
+          price: '$149.99',
+          availability: 'in-stock',
+          description: 'LED cyberpunk samurai armor with glowing effects'
+        }
+      ),
+      createAffiliateLink(
+        'cyberpunk-samurai-aliexpress',
+        'Future Samurai LED Cosplay',
+        'https://www.aliexpress.com/item/100500987654321.html',
+        'AliExpress',
+        {
+          price: '$78.99',
+          availability: 'in-stock',
+          description: 'Cyberpunk samurai armor with LED lights and katana'
+        }
+      )
+    ],
+    
     isActive: true,
     isPremium: false,
     isNew: true,
@@ -258,6 +323,31 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       socialPreview: 'Transform into a magical girl with crystal powers and sparkling effects',
       callToAction: 'Unleash your magic powers'
     },
+    
+    affiliateLinks: [
+      createAffiliateLink(
+        'magical-girl-amazon',
+        'Magical Girl Transformation Costume',
+        'https://www.amazon.com/Magical-Girl-Transformation-Dress-Sailor/dp/B08LMN4567',
+        'Amazon',
+        {
+          price: '$69.99',
+          availability: 'in-stock',
+          description: 'Complete magical girl dress accessories and wand'
+        }
+      ),
+      createAffiliateLink(
+        'magical-girl-etsy',
+        'Handmade Magical Girl Cosplay',
+        'https://www.etsy.com/listing/123456789/magical-girl-costume-custom-order',
+        'Etsy',
+        {
+          price: '$120.00',
+          availability: 'pre-order',
+          description: 'Custom magical girl cosplay handmade to your measurements'
+        }
+      )
+    ],
     
     isActive: true,
     isPremium: false,
@@ -348,6 +438,31 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       callToAction: 'Embrace eternal elegance'
     },
     
+    affiliateLinks: [
+      createAffiliateLink(
+        'vampire-noble-amazon',
+        'Victorian Vampire Costume Set',
+        'https://www.amazon.com/Victorian-Vampire-Costume-Cape-Medallion/dp/B08ABC8901',
+        'Amazon',
+        {
+          price: '$59.99',
+          availability: 'in-stock',
+          description: 'Complete vampire noble costume with cape and jewelry'
+        }
+      ),
+      createAffiliateLink(
+        'vampire-noble-spirithalloween',
+        'Deluxe Vampire Lord Costume',
+        'https://www.spirithalloween.com/deluxe-vampire-lord-costume/165432.html',
+        'SpiritHalloween',
+        {
+          price: '$89.99',
+          availability: 'in-stock',
+          description: 'Premium vampire lord costume with accessories'
+        }
+      )
+    ],
+    
     isActive: true,
     isPremium: false,
     isNew: true,
@@ -437,6 +552,31 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       callToAction: 'Float into cute haunting'
     },
     
+    affiliateLinks: [
+      createAffiliateLink(
+        'kawaii-ghost-amazon',
+        'Cute Ghost Costume for Adults',
+        'https://www.amazon.com/Kawaii-Ghost-Costume-Pastel-Halloween/dp/B08DEF2345',
+        'Amazon',
+        {
+          price: '$39.99',
+          availability: 'in-stock',
+          description: 'Adorable pastel ghost costume with friendly design'
+        }
+      ),
+      createAffiliateLink(
+        'kawaii-ghost-aliexpress',
+        'Japanese Kawaii Ghost Kimono',
+        'https://www.aliexpress.com/item/100500555111222.html',
+        'AliExpress',
+        {
+          price: '$28.99',
+          availability: 'in-stock',
+          description: 'Cute ghost style kimono costume with accessories'
+        }
+      )
+    ],
+    
     isActive: true,
     isPremium: false,
     isNew: true,
@@ -525,6 +665,42 @@ export const HALLOWEEN_COSTUMES: CostumePreset[] = [
       socialPreview: 'Transform into a contemporary dark witch with crystal accessories and mystical energy',
       callToAction: 'Awaken your magical power'
     },
+    
+    affiliateLinks: [
+      createAffiliateLink(
+        'dark-witch-spirithalloween',
+        'Modern Dark Witch Costume',
+        'https://www.spirithalloween.com/modern-dark-witch-costume/987654.html',
+        'SpiritHalloween',
+        {
+          price: '$79.99',
+          availability: 'in-stock',
+          description: 'Contemporary witch costume with crystal accessories'
+        }
+      ),
+      createAffiliateLink(
+        'dark-witch-etsy',
+        'Handmade Crystal Witch Costume',
+        'https://www.etsy.com/listing/987654321/dark-witch-crystal-costume-custom',
+        'Etsy',
+        {
+          price: '$135.00',
+          availability: 'pre-order',
+          description: 'Custom dark witch costume with real crystal accessories'
+        }
+      ),
+      createAffiliateLink(
+        'dark-witch-amazon',
+        'Mystical Witch Costume Set',
+        'https://www.amazon.com/Mystical-Witch-Costume-Crystal-Accessories/dp/B08GHI3456',
+        'Amazon',
+        {
+          price: '$54.99',
+          availability: 'in-stock',
+          description: 'Complete dark witch costume with crystal props'
+        }
+      )
+    ],
     
     isActive: true,
     isPremium: false,

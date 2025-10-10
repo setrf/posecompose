@@ -1,7 +1,7 @@
-import GroupPhotoGenerator from "@/components/GroupPhotoGenerator";
+import CostumeTransformationFlow from "@/components/CostumeTransformationFlow";
 
 const Index = () => {
-  return <GroupPhotoGenerator />;
+  return <CostumeTransformationFlow />;
 };
 
 export default Index;

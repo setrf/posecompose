@@ -1,17 +1,29 @@
-import { CheckCircle, Circle } from "lucide-react";
+import { CheckCircle, Circle, Sparkles, Mail, Camera, Wand2, Trophy } from "lucide-react";
 
 interface StepIndicatorProps {
-  currentStep: 'background' | 'upload' | 'select' | 'generate' | 'result';
+  currentStep: 'background' | 'upload' | 'select' | 'generate' | 'result' | 'costume' | 'email';
 }
 
 export const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
-  const steps = [
-    { id: 'background', label: 'Background', number: 1 },
-    { id: 'upload', label: 'Add People', number: 2 },
-    { id: 'select', label: 'Select & Arrange', number: 3 },
-    { id: 'generate', label: 'Generate', number: 4 },
-    { id: 'result', label: 'Result', number: 5 },
+  // New costume transformation flow
+  const costumeSteps = [
+    { id: 'costume', label: 'Costume', number: 1, icon: <Sparkles className="w-5 h-5" /> },
+    { id: 'email', label: 'Email', number: 2, icon: <Mail className="w-5 h-5" /> },
+    { id: 'upload', label: 'Selfie', number: 3, icon: <Camera className="w-5 h-5" /> },
+    { id: 'generate', label: 'Magic', number: 4, icon: <Wand2 className="w-5 h-5" /> },
+    { id: 'result', label: 'Result', number: 5, icon: <Trophy className="w-5 h-5" /> },
   ];
+
+  // Original group photo flow (for backwards compatibility)
+  const groupSteps = [
+    { id: 'background', label: 'Background', number: 1, icon: <Circle className="w-5 h-5" /> },
+    { id: 'upload', label: 'Add People', number: 2, icon: <Circle className="w-5 h-5" /> },
+    { id: 'select', label: 'Select & Arrange', number: 3, icon: <Circle className="w-5 h-5" /> },
+    { id: 'generate', label: 'Generate', number: 4, icon: <Circle className="w-5 h-5" /> },
+    { id: 'result', label: 'Result', number: 5, icon: <Circle className="w-5 h-5" /> },
+  ];
+
+  const steps = costumeSteps.find(s => s.id === currentStep) ? costumeSteps : groupSteps;
 
   const getCurrentStepIndex = () => {
     return steps.findIndex(step => step.id === currentStep);
@@ -53,6 +65,8 @@ export const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
               >
                 {isCompleted ? (
                   <CheckCircle className="w-6 h-6" />
+                ) : isActive && 'icon' in step ? (
+                  <div className="text-primary">{step.icon}</div>
                 ) : (
                   <span>{step.number}</span>
                 )}
