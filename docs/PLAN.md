@@ -10,10 +10,10 @@ Rebrand the existing experience into Waifu Material and deliver a polished Hallo
    - Update Tailwind tokens and component styles to neon/anime aesthetic. ✅
    - Replace hero messaging, typography, and meta assets. ✅
 
-2. **Costume Catalog Foundations**  _(catalog-curator-droid)_
-   - Define costume schema (`CostumePreset`).
-   - Import 6–9 launch costumes with reference images and prompts.
-   - Document migration path to Neon/Supabase.
+2. **Costume Catalog Foundations**  _(catalog-curator-droid)_ ✅ **COMPLETED**
+   - Define costume schema (`CostumePreset`). ✅
+   - Import 6–9 launch costumes with reference images and prompts. ✅
+   - Document migration path to Neon/Supabase. ✅
 
 3. **Flow Rework & UX Copy**  _(affiliates-comms-droid)_
    - Reframe screens: costume selection → selfie upload → email capture → generation lounge → results/share.
