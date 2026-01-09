@@ -74,16 +74,35 @@ Frontend (Vite/React/TS)
 Backend API Proxy (Express)
 --------------------------
 
-- Location on server: `/opt/posecompose-api`.
+- Source code: `api/` directory in this repository.
+- Deployed location: `/opt/posecompose-api`.
 - Service file: `/etc/systemd/system/posecompose-api.service` (enabled at boot).
 - Env file (owner root, mode 600): `/etc/posecompose-api.env` containing:
   - `GEMINI_API_KEY=<YOUR_SERVER_SIDE_KEY>` (stored securely, never sent to clients)
   - `PORT=4005`
-- Server code: `server.js` uses Express JSON body parsing and forwards requests to:
-  - `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent`
+- Server code: `api/server.js` uses Express JSON body parsing and forwards requests to:
+  - `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`
   - API key is supplied via `x-goog-api-key` header.
 - Health endpoint: `GET /healthz` → `{ ok: true }`.
 - JSON body limit: 30 MB (to match Nginx limits and large base64 payloads).
+
+### Backend Dependencies
+
+```json
+{
+  "express": "^4.19.2",
+  "morgan": "^1.10.0",
+  "node-fetch": "^2.7.0"
+}
+```
+
+### Deploying Backend Changes
+
+After modifying `api/server.js`:
+```sh
+sudo cp api/server.js /opt/posecompose-api/server.js
+sudo systemctl restart posecompose-api.service
+```
 
 Infrastructure (Nginx, TLS, domains)
 ------------------------------------
@@ -203,12 +222,32 @@ The tracking code is loaded in `index.html` and automatically tracks page views.
 Operational Runbook
 -------------------
 
-Deploy a new build
+Deploy frontend changes
 ```sh
 cd /root/Projects/apps/posecompose-repo
 npm ci
 npm run build
 /usr/local/bin/deploy_static dist posecompose
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+Deploy backend changes
+```sh
+cd /root/Projects/apps/posecompose-repo
+sudo cp api/server.js /opt/posecompose-api/server.js
+sudo cp api/package.json /opt/posecompose-api/package.json
+# If dependencies changed:
+cd /opt/posecompose-api && sudo npm ci
+sudo systemctl restart posecompose-api.service
+```
+
+Deploy both frontend and backend
+```sh
+cd /root/Projects/apps/posecompose-repo
+npm ci && npm run build
+/usr/local/bin/deploy_static dist posecompose
+sudo cp api/server.js /opt/posecompose-api/server.js
+sudo systemctl restart posecompose-api.service
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
@@ -221,6 +260,11 @@ sudo systemctl restart posecompose-api.service
 Check backend health
 ```sh
 curl -s http://127.0.0.1:4005/healthz
+```
+
+Check all services status
+```sh
+systemctl status posecompose-api nginx
 ```
 
 Troubleshooting
@@ -250,20 +294,29 @@ apps/posecompose-repo/
 ├─ index.html
 ├─ package.json
 ├─ vite.config.ts
+├─ api/                          # Backend API proxy (Express)
+│  ├─ server.js                  # Main server entry point
+│  └─ package.json               # Backend dependencies
 ├─ public/
+│  ├─ favicon.png
 │  ├─ placeholder.svg
 │  └─ robots.txt
-├─ src/
+├─ src/                          # Frontend source (React/TypeScript)
 │  ├─ components/
-│  │  ├─ GroupPhotoGenerator.tsx
-│  │  ├─ BackgroundUpload.tsx
-│  │  ├─ PersonUpload.tsx
-│  │  ├─ PersonSelection.tsx
-│  │  ├─ ResultDisplay.tsx
-│  │  ├─ FormatSelection.tsx
-│  │  └─ ui/*
-│  └─ main.tsx …
-└─ dist/ (build output)
+│  │  ├─ GroupPhotoGenerator.tsx # Core orchestrator component
+│  │  ├─ BackgroundUpload.tsx    # Background image selection
+│  │  ├─ PersonUpload.tsx        # Person photo uploads
+│  │  ├─ PersonSelection.tsx     # Selection and ordering
+│  │  ├─ ResultDisplay.tsx       # Final composite display
+│  │  ├─ FormatSelection.tsx     # Export format presets
+│  │  ├─ ImageCropper.tsx        # Canvas-based image cropper
+│  │  └─ ui/                     # shadcn/ui components
+│  ├─ hooks/                     # Custom React hooks
+│  ├─ lib/                       # Utility functions
+│  ├─ pages/                     # Route pages
+│  ├─ assets/                    # Sample images
+│  └─ main.tsx
+└─ dist/                         # Production build output
 ```
 
 Roadmap / Future Improvements
